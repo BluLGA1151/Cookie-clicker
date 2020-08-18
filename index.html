@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="Stylesheet" href="style.css">
+        <meta proprety="og:image" content="https://blutopia.ca/games/cookie/cookie.png"/>
+        <meta name="description" content="Cookie clicker game lol">
+        <meta name="theme-color" content="#EEC171">
+        <script src="jquery.js"></script>
+        <script>
+
+            function getCookie(cname) {
+                var name = cname + "=";
+                var decodedCookie = decodeURIComponent(document.cookie);
+                var ca = decodedCookie.split(';');
+                for (var i = 0; i <ca.length; i++) {
+                        var c = ca[i];
+                        while (c.charAt(0) == ' ') {
+                            c = c.substring(1);
+                        }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+
+            function checkCookie() {
+            var username = getCookie("username");
+            if (username != "") {
+                alert("Logged in as " + username);
+            } else {
+                alert("Log in to save your progress")
+            }
+            }
+            
+            function setCookie(cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays*24*60*60*1000));
+                var expires = "expires="+ d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/games/cookie";
+            }
+
+            function logout() {
+                setCookie('username', '', -1)
+                setCookie('password', '', -1)
+            }
+            
+            checkCookie()
+
+            var cookies = 0;
+
+            $(()=> {
+                $.get('cookies.php', (data) => {
+                    cookies = Number(data)
+                    document.getElementById('cookiecount').innerHTML = data;
+                });
+            });
+
+            $(() => {
+                $('.clickers').click(() => {
+
+                    cookies++
+                    
+
+                    document.getElementById('cookiecount').innerHTML = cookies;
+
+
+                    $.post('cookies.php', (data) => {
+                        //document.getElementById('cookiecount').innerHTML = data;
+                    }).fail(() => {
+                        alert("Please log in")
+                    });
+                    return false;
+                });
+            });
+
+            function resizeup() {
+                document.getElementById('myImage').style.maxWidth = '300px';
+            }
+
+            function resizedown() {
+                document.getElementById('myImage').style.maxWidth = '250px';
+            }
+
+            
+
+        </script>
+
+    </head>
+    <body>
+        <div class="menu">
+            <ul>
+                <li class="isloggedin"><a onclick="logout()" href="login.php">Log out</a></li>
+                <li class="isnotloggedin"><a href="login.php">Log in</a></li>
+                <li class="isnotloggedin"><a href="register.php">Register</a></li>
+            </ul>
+        </div>
+        <div class="cookie">
+            <a class="clickers"  ondragstart="return false;" onmousedown="resizeup()" onmouseup="resizedown()" ontouchstart='resizeup()' ontouchend="resizeup()">
+                <img id="myImage" src="cookie.png">
+            </a>
+            
+
+        </div>
+        <div class="count">
+            <h1>
+                <span id="cookiecount">0</span>
+            </h1>
+        </div>
+    </body>
+</html>
