@@ -13,11 +13,11 @@ if (isset($_COOKIE['username'])) {
     ";
 }
 
-$dbhost = "localhost";
-$dbuser = "blutonium";
-$dbname = "blutopia";
-$dbpass = "train";
-$dbcharset = "utf8mb4";
+$dbhost = "";
+$dbuser = "";
+$dbname = "";
+$dbpass = "";
+
 
 try {
     $db = new PDO("pgsql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);

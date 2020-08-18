@@ -1,9 +1,9 @@
 <?php
 
-    $dbhost = "localhost";
-    $dbuser = "blutonium";
-    $dbname = "blutopia";
-    $dbpass = "train";
+    $dbhost = "";
+    $dbuser = "";
+    $dbname = "";
+    $dbpass = "";
 
     $db = new PDO("pgsql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
 
